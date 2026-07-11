@@ -1,0 +1,16 @@
+Category,Validation_Check,Issue_Count,Status
+Dataset Overview,Total Rows,541909,Info
+Dataset Overview,Total Columns,9,Info
+Completeness,Missing CustomerID,135080,Review
+Completeness,Missing Description,1454,Review
+Completeness,Missing Country,0,Pass
+Uniqueness,Duplicate Rows,5268,Review
+Uniqueness,Duplicate Line Items,5271,Review
+Business Rule,Invalid Quantity,10624,Review
+Business Rule,Cancelled Invoices,9288,Review
+Validity,Negative Unit Price,2,Review
+Business Rule,Zero Unit Price,2515,Review
+Validity,Invalid InvoiceDate,0,Pass
+Validity,Future InvoiceDate,0,Pass
+Business Rule,Negative Revenue,9290,Review
+Business Rule,Zero Revenue,2515,Review

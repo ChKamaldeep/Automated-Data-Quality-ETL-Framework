@@ -1,0 +1,27 @@
+Category,Validation_Check,Issue_Count,Status,Details
+Completeness,Missing Values - InvoiceNo,0,Pass,Null values found in InvoiceNo.
+Completeness,Missing Values - StockCode,0,Pass,Null values found in StockCode.
+Completeness,Missing Values - Quantity,0,Pass,Null values found in Quantity.
+Completeness,Missing Values - InvoiceDate,0,Pass,Null values found in InvoiceDate.
+Completeness,Missing Values - UnitPrice,0,Pass,Null values found in UnitPrice.
+Completeness,Missing Values - Country,0,Pass,Null values found in Country.
+Completeness,Missing Country,0,Pass,Rows where Country is missing.
+Validity,Invalid InvoiceDate,0,Pass,Rows where InvoiceDate could not be converted to a valid datetime.
+Validity,Future InvoiceDate,0,Pass,Rows where InvoiceDate is greater than today's date.
+Validity,Invalid StockCode,0,Pass,Rows where StockCode is missing or blank.
+Business Rule,Invalid Quantity,10624,Review,Rows where Quantity is less than or equal to zero. These may represent returns or cancellations.
+Business Rule,Negative Revenue,9290,Review,Rows where calculated Revenue is less than zero. Usually caused by negative Quantity.
+Business Rule,Cancelled Invoices,9288,Review,"Invoice numbers beginning with C, indicating cancellations."
+Business Rule,Zero Unit Price,2515,Review,"Rows where UnitPrice is zero. These may be free items, adjustments, or data issues."
+Business Rule,Zero Revenue,2515,Review,Rows where calculated Revenue is zero. Usually caused by zero UnitPrice or zero Quantity.
+Completeness,Total Missing Values,136534,Review,Total null values found across the dataset.
+Completeness,Missing Values - CustomerID,135080,Review,Null values found in CustomerID.
+Completeness,Missing CustomerID,135080,Review,Rows where CustomerID is missing.
+Completeness,Missing Values - Description,1454,Review,Null values found in Description.
+Completeness,Missing Description,1454,Review,Rows where product Description is missing.
+Consistency,Description Leading or Trailing Spaces,113453,Review,Rows where Description has leading or trailing spaces.
+Outlier,Quantity Outliers,58619,Review,Quantity values outside the IQR range: -12.50 to 23.50.
+Outlier,UnitPrice Outliers,39627,Review,UnitPrice values outside the IQR range: -3.07 to 8.45.
+Uniqueness,Duplicate Line Items,5271,Review,"Repeated business line items using InvoiceNo, StockCode, Quantity, and UnitPrice."
+Uniqueness,Duplicate Rows,5268,Review,Fully duplicated records across all source columns.
+Validity,Negative Unit Price,2,Review,Rows where UnitPrice is below zero.

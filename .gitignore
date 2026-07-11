@@ -1,0 +1,47 @@
+# Python Cache Files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+
+# Log Files
+logs/*.log
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE Files
+.vscode/
+.idea/
+
+# Python Environment Files
+.python-version
+
+# Temporary Files
+*.tmp
+*.bak
+*.swp
+
+# Distribution Files
+build/
+dist/
+*.egg-info/
+
+# Coverage Reports
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Local Database Files
+*.db
+*.sqlite3
