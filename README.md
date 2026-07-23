@@ -1012,7 +1012,7 @@ The Online Retail dataset is publicly available through the UCI Machine Learning
 
 # Author
 
-**KD**
+**Kamaldeep**
 
 This project was developed as a portfolio project to demonstrate practical skills in Python, SQL, data engineering, ETL pipeline development, data quality validation, and analytics.
 
