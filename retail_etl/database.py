@@ -84,7 +84,7 @@ def publish_snapshot(df, *, connection=None, batch_size=2000):
                OR invoice_day <> DAY(invoice_date)
                OR invoice_hour <> HOUR(invoice_date)
                OR invoice_quarter <> QUARTER(invoice_date)
-               OR year_month <> DATE_FORMAT(invoice_date, '%Y-%m')""")
+               OR `year_month` <> DATE_FORMAT(invoice_date, '%Y-%m')""")
         if cursor.fetchone()[0]:
             raise ValueError("Database derived-value validation failed")
         conn.commit()
