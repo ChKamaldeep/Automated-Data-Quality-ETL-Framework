@@ -1,32 +1,34 @@
--- Phase 6: Load to MySQL
--- Script 02: Create table for feature-engineered Online Retail data
-
+-- Generated from retail_etl.schema. Never drops existing data.
+-- Existing v1 tables are migrated by the staging publisher, not CREATE IF NOT EXISTS.
 USE automated_data_quality_etl;
 
-DROP TABLE IF EXISTS online_retail_feature_engineered;
-
-CREATE TABLE online_retail_feature_engineered (
-    invoice_no VARCHAR(50),
-    stock_code VARCHAR(50),
-    description TEXT,
-    quantity INT,
-    invoice_date DATETIME,
-    unit_price DECIMAL(10,2),
-    customer_id VARCHAR(50),
-    country VARCHAR(100),
-
-    total_amount DECIMAL(12,2),
-    invoice_year INT,
-    invoice_month INT,
-    invoice_day INT,
-    invoice_hour INT,
-    day_of_week VARCHAR(20),
-    is_weekend VARCHAR(10),
-
-    revenue_category VARCHAR(50),
-    quantity_category VARCHAR(50),
-    unit_price_category VARCHAR(50),
-    customer_type VARCHAR(50),
-
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+CREATE TABLE IF NOT EXISTS `online_retail_feature_engineered` (
+    `invoice_no` VARCHAR(50) NOT NULL,
+    `stock_code` VARCHAR(50) NOT NULL,
+    `description` TEXT NOT NULL,
+    `quantity` INT NOT NULL,
+    `invoice_date` DATETIME NOT NULL,
+    `unit_price` DECIMAL(18,6) NOT NULL,
+    `customer_id` VARCHAR(50) NOT NULL,
+    `country` VARCHAR(100) NOT NULL,
+    `total_amount` DECIMAL(18,2) NOT NULL,
+    `invoice_year` SMALLINT NOT NULL,
+    `invoice_month` TINYINT NOT NULL,
+    `invoice_month_name` VARCHAR(9) NOT NULL,
+    `invoice_day` TINYINT NOT NULL,
+    `invoice_day_name` VARCHAR(9) NOT NULL,
+    `invoice_hour` TINYINT NOT NULL,
+    `invoice_quarter` TINYINT NOT NULL,
+    `year_month` CHAR(7) NOT NULL,
+    `quantity_category` VARCHAR(6) NOT NULL,
+    `revenue_category` VARCHAR(13) NOT NULL,
+    `source_row_number` BIGINT NOT NULL,
+    PRIMARY KEY (`source_row_number`),
+    INDEX idx_invoice_date (`invoice_date`),
+    INDEX idx_customer_id (`customer_id`),
+    INDEX idx_stock_code (`stock_code`),
+    INDEX idx_invoice_no (`invoice_no`),
+    CHECK (quantity > 0),
+    CHECK (unit_price > 0),
+    CHECK (total_amount >= 0)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
