@@ -1,3 +1,5 @@
+-- Population: positive sales with identified customers, excluding cancellations.
+-- Includes positive-price lines whose rounded amount is zero. Currency: GBP.
  -- ============================================================
 -- File: 06_sql_data_quality_validation.sql
 -- Purpose:
@@ -18,30 +20,15 @@ SELECT
     SUM(CASE WHEN country IS NULL THEN 1 ELSE 0 END) AS null_country
 FROM online_retail_feature_engineered;
 
--- Duplicate transaction-line check
-SELECT
-    invoice_no,
-    stock_code,
-    customer_id,
-    invoice_date,
-    quantity,
-    unit_price,
-    COUNT(*) AS duplicate_count
+-- Source-row identity is the key; repeated invoice/product combinations can be valid.
+SELECT source_row_number, COUNT(*) AS duplicate_count
 FROM online_retail_feature_engineered
-GROUP BY
-    invoice_no,
-    stock_code,
-    customer_id,
-    invoice_date,
-    quantity,
-    unit_price
-HAVING COUNT(*) > 1
-ORDER BY duplicate_count DESC;
+GROUP BY source_row_number HAVING COUNT(*) > 1;
 
 -- Negative quantity check
 SELECT *
 FROM online_retail_feature_engineered
-WHERE quantity < 0;
+WHERE quantity <= 0;
 
 -- Zero or negative unit price check
 SELECT *
@@ -62,7 +49,7 @@ WHERE ROUND(total_amount, 2) <> ROUND(quantity * unit_price, 2);
 -- Future invoice date check
 SELECT *
 FROM online_retail_feature_engineered
-WHERE invoice_date > CURRENT_DATE();
+WHERE invoice_date >= CURRENT_DATE() + INTERVAL 1 DAY;
 
 -- Blank text field checks
 SELECT *

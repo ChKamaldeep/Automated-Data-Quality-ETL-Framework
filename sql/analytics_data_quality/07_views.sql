@@ -1,3 +1,5 @@
+-- Population: positive sales with identified customers, excluding cancellations.
+-- Includes positive-price lines whose rounded amount is zero. Currency: GBP.
 -- ============================================================
 -- File: 07_views.sql
 -- Purpose:
@@ -11,8 +13,7 @@ CREATE OR REPLACE VIEW vw_positive_sales AS
 SELECT *
 FROM online_retail_feature_engineered
 WHERE quantity > 0
-  AND unit_price > 0
-  AND total_amount > 0;
+  AND unit_price > 0;
 
 -- View 2: monthly revenue summary
 CREATE OR REPLACE VIEW vw_monthly_revenue AS
