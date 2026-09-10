@@ -1,3 +1,5 @@
+-- Population: positive sales with identified customers, excluding cancellations.
+-- Includes positive-price lines whose rounded amount is zero. Currency: GBP.
 -- ============================================================
 -- Phase 7: SQL Analytics & Data Quality
 -- File: 01_business_kpis_eda.sql
@@ -29,7 +31,7 @@ SELECT
     ROUND(AVG(quantity), 2) AS avg_quantity,
     ROUND(AVG(unit_price), 2) AS avg_unit_price
 FROM online_retail_feature_engineered
-WHERE total_amount > 0;
+WHERE quantity > 0 AND unit_price > 0;
 
 -- Revenue by country
 SELECT
@@ -38,7 +40,7 @@ SELECT
     COUNT(DISTINCT invoice_no) AS invoices,
     COUNT(DISTINCT customer_id) AS customers
 FROM online_retail_feature_engineered
-WHERE total_amount > 0
+WHERE quantity > 0 AND unit_price > 0
 GROUP BY country
 ORDER BY revenue DESC;
 
@@ -47,7 +49,7 @@ SELECT
     country,
     ROUND(SUM(total_amount), 2) AS revenue
 FROM online_retail_feature_engineered
-WHERE total_amount > 0
+WHERE quantity > 0 AND unit_price > 0
 GROUP BY country
 ORDER BY revenue DESC
 LIMIT 10;
@@ -59,7 +61,7 @@ SELECT
     invoice_date,
     ROUND(SUM(total_amount), 2) AS invoice_revenue
 FROM online_retail_feature_engineered
-WHERE total_amount > 0
+WHERE quantity > 0 AND unit_price > 0
 GROUP BY invoice_no, customer_id, invoice_date
 ORDER BY invoice_revenue DESC
 LIMIT 20;

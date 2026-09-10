@@ -1,5 +1,2 @@
-pandas>=2.2.0
-numpy>=2.2.0
-openpyxl>=3.1.0
-jupyter>=1.1.0
-ipykernel>=6.29.0
+# Core installation; dependency definitions live in pyproject.toml.
+-e .

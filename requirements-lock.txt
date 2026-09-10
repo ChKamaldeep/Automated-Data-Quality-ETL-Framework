@@ -1,0 +1,12 @@
+# Core versions used for full-data verification on Python 3.12.
+# Install with: python -m pip install -r requirements-lock.txt
+# Then: python -m pip install --no-deps -e .
+pandas==2.2.3
+numpy==2.3.5
+openpyxl==3.1.5
+mysql-connector-python==9.7.0
+python-dateutil==2.9.0.post0
+pytz==2026.3.post1
+tzdata==2026.3
+six==1.17.0
+et-xmlfile==2.0.0

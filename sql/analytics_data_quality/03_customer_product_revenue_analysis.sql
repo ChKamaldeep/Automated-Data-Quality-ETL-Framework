@@ -1,3 +1,5 @@
+-- Population: positive sales with identified customers, excluding cancellations.
+-- Includes positive-price lines whose rounded amount is zero. Currency: GBP.
 -- ============================================================
 -- File: 03_customer_product_revenue_analysis.sql
 -- Purpose:
@@ -14,7 +16,7 @@ SELECT
     ROUND(AVG(total_amount), 2) AS avg_line_value
 FROM online_retail_feature_engineered
 WHERE customer_id IS NOT NULL
-  AND total_amount > 0
+  AND unit_price > 0
 GROUP BY customer_id
 ORDER BY total_revenue DESC
 LIMIT 20;
@@ -26,7 +28,7 @@ SELECT
     ROUND(SUM(total_amount), 2) AS revenue
 FROM online_retail_feature_engineered
 WHERE customer_id IS NOT NULL
-  AND total_amount > 0
+  AND unit_price > 0
 GROUP BY customer_id
 ORDER BY purchase_frequency DESC
 LIMIT 20;
@@ -48,7 +50,7 @@ SELECT
     description,
     ROUND(SUM(total_amount), 2) AS product_revenue
 FROM online_retail_feature_engineered
-WHERE total_amount > 0
+WHERE quantity > 0 AND unit_price > 0
 GROUP BY stock_code, description
 ORDER BY product_revenue DESC
 LIMIT 20;
@@ -58,7 +60,7 @@ SELECT
     country,
     ROUND(SUM(total_amount) / COUNT(DISTINCT invoice_no), 2) AS avg_order_value
 FROM online_retail_feature_engineered
-WHERE total_amount > 0
+WHERE quantity > 0 AND unit_price > 0
 GROUP BY country
 ORDER BY avg_order_value DESC;
 
@@ -70,10 +72,10 @@ SELECT
     CASE
         WHEN COUNT(DISTINCT invoice_no) = 1 THEN 'One-Time Customer'
         WHEN COUNT(DISTINCT invoice_no) BETWEEN 2 AND 5 THEN 'Repeat Customer'
-        ELSE 'High-Value Repeat Customer'
+        ELSE 'Frequent Repeat Customer'
     END AS customer_segment
 FROM online_retail_feature_engineered
 WHERE customer_id IS NOT NULL
-  AND total_amount > 0
+  AND unit_price > 0
 GROUP BY customer_id
 ORDER BY total_revenue DESC;

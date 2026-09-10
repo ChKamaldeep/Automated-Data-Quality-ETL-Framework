@@ -1,3 +1,5 @@
+-- Population: positive sales with identified customers, excluding cancellations.
+-- Includes positive-price lines whose rounded amount is zero. Currency: GBP.
 -- ============================================================
 -- File: 05_subqueries_ctes_window_functions.sql
 -- Purpose:
@@ -12,7 +14,7 @@ SELECT
     ROUND(SUM(total_amount), 2) AS customer_revenue
 FROM online_retail_feature_engineered
 WHERE customer_id IS NOT NULL
-  AND total_amount > 0
+  AND unit_price > 0
 GROUP BY customer_id
 HAVING SUM(total_amount) > (
     SELECT AVG(customer_total)
@@ -20,7 +22,7 @@ HAVING SUM(total_amount) > (
         SELECT SUM(total_amount) AS customer_total
         FROM online_retail_feature_engineered
         WHERE customer_id IS NOT NULL
-          AND total_amount > 0
+          AND unit_price > 0
         GROUP BY customer_id
     ) AS customer_totals
 )
@@ -33,7 +35,7 @@ WITH customer_revenue AS (
         ROUND(SUM(total_amount), 2) AS revenue
     FROM online_retail_feature_engineered
     WHERE customer_id IS NOT NULL
-      AND total_amount > 0
+      AND unit_price > 0
     GROUP BY customer_id
 )
 SELECT
@@ -52,7 +54,7 @@ WITH country_product_revenue AS (
         description,
         ROUND(SUM(total_amount), 2) AS revenue
     FROM online_retail_feature_engineered
-    WHERE total_amount > 0
+    WHERE quantity > 0 AND unit_price > 0
     GROUP BY country, stock_code, description
 ),
 ranked_products AS (
@@ -79,7 +81,7 @@ WITH product_revenue AS (
         description,
         ROUND(SUM(total_amount), 2) AS revenue
     FROM online_retail_feature_engineered
-    WHERE total_amount > 0
+    WHERE quantity > 0 AND unit_price > 0
     GROUP BY stock_code, description
 )
 SELECT
@@ -99,7 +101,7 @@ WITH monthly_revenue AS (
         invoice_month,
         ROUND(SUM(total_amount), 2) AS revenue
     FROM online_retail_feature_engineered
-    WHERE total_amount > 0
+    WHERE quantity > 0 AND unit_price > 0
     GROUP BY invoice_year, invoice_month
 )
 SELECT
@@ -123,7 +125,7 @@ WITH monthly_revenue AS (
         invoice_month,
         ROUND(SUM(total_amount), 2) AS revenue
     FROM online_retail_feature_engineered
-    WHERE total_amount > 0
+    WHERE quantity > 0 AND unit_price > 0
     GROUP BY invoice_year, invoice_month
 )
 SELECT

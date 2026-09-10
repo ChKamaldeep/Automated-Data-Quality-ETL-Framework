@@ -29,30 +29,17 @@ SELECT COUNT(*) AS total_amount_mismatch_records
 FROM online_retail_feature_engineered
 WHERE ROUND(quantity * unit_price, 2) <> ROUND(total_amount, 2);
 
--- 5. Check duplicate records
-SELECT
-    invoice_no,
-    stock_code,
-    customer_id,
-    invoice_date,
-    COUNT(*) AS duplicate_count
+-- 5. A source row is unique within this full snapshot.
+SELECT source_row_number, COUNT(*) AS duplicate_count
 FROM online_retail_feature_engineered
-GROUP BY invoice_no, stock_code, customer_id, invoice_date
-HAVING COUNT(*) > 1
-ORDER BY duplicate_count DESC;
+GROUP BY source_row_number HAVING COUNT(*) > 1;
 
--- 6. Check feature value distribution
+-- 6. Feature distributions
 SELECT revenue_category, COUNT(*) AS record_count
-FROM online_retail_feature_engineered
-GROUP BY revenue_category
-ORDER BY record_count DESC;
-
+FROM online_retail_feature_engineered GROUP BY revenue_category;
 SELECT quantity_category, COUNT(*) AS record_count
-FROM online_retail_feature_engineered
-GROUP BY quantity_category
-ORDER BY record_count DESC;
+FROM online_retail_feature_engineered GROUP BY quantity_category;
 
-SELECT customer_type, COUNT(*) AS record_count
-FROM online_retail_feature_engineered
-GROUP BY customer_type
-ORDER BY record_count DESC;
+-- 7. Rounded zero amounts are intentional for sub-penny unit prices.
+SELECT COUNT(*) AS zero_rounded_amount_rows
+FROM online_retail_feature_engineered WHERE total_amount = 0;

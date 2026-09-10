@@ -1,3 +1,5 @@
+-- Population: positive sales with identified customers, excluding cancellations.
+-- Includes positive-price lines whose rounded amount is zero. Currency: GBP.
 -- ============================================================
 -- File: 04_time_series_analysis.sql
 -- Purpose:
@@ -12,7 +14,7 @@ SELECT
     ROUND(SUM(total_amount), 2) AS daily_revenue,
     COUNT(DISTINCT invoice_no) AS daily_orders
 FROM online_retail_feature_engineered
-WHERE total_amount > 0
+WHERE quantity > 0 AND unit_price > 0
 GROUP BY DATE(invoice_date)
 ORDER BY invoice_day;
 
@@ -24,7 +26,7 @@ SELECT
     COUNT(DISTINCT invoice_no) AS monthly_orders,
     COUNT(DISTINCT customer_id) AS monthly_customers
 FROM online_retail_feature_engineered
-WHERE total_amount > 0
+WHERE quantity > 0 AND unit_price > 0
 GROUP BY invoice_year, invoice_month
 ORDER BY invoice_year, invoice_month;
 
@@ -34,7 +36,7 @@ SELECT
     ROUND(SUM(total_amount), 2) AS revenue,
     COUNT(DISTINCT invoice_no) AS invoices
 FROM online_retail_feature_engineered
-WHERE total_amount > 0
+WHERE quantity > 0 AND unit_price > 0
 GROUP BY DAYNAME(invoice_date)
 ORDER BY revenue DESC;
 
@@ -44,7 +46,7 @@ SELECT
     ROUND(SUM(total_amount), 2) AS hourly_revenue,
     COUNT(DISTINCT invoice_no) AS invoices
 FROM online_retail_feature_engineered
-WHERE total_amount > 0
+WHERE quantity > 0 AND unit_price > 0
 GROUP BY invoice_hour
 ORDER BY invoice_hour;
 
@@ -55,7 +57,7 @@ SELECT
     ROUND(SUM(total_amount), 2) AS quarterly_revenue,
     COUNT(DISTINCT invoice_no) AS total_orders
 FROM online_retail_feature_engineered
-WHERE total_amount > 0
+WHERE quantity > 0 AND unit_price > 0
 GROUP BY
     YEAR(invoice_date),
     QUARTER(invoice_date)

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "online-retail-etl"
+version = "2.0.0"
+description = "Validated Online Retail ETL with safe MySQL snapshot publishing"
+requires-python = ">=3.11"
+dependencies = ["pandas>=2.2,<3", "openpyxl>=3.1,<4", "mysql-connector-python>=9,<10"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "nbformat>=5,<6", "nbclient>=0.10,<1", "ipykernel>=6,<8", "jupyterlab>=4,<5"]
+
+[project.scripts]
+retail-etl = "retail_etl.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["retail_etl*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["mysql: requires an isolated MySQL 8.0.16+ test database"]

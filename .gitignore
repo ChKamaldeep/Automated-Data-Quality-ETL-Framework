@@ -45,3 +45,11 @@ htmlcov/
 # Local Database Files
 *.db
 *.sqlite3
+# Secrets and generated run artifacts
+.env
+.env.*
+!.env.example
+outputs/
+reports/
+*.log
+*.log.*

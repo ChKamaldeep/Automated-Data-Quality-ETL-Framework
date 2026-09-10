@@ -1,2 +1,0 @@
-execution_date,pipeline_status,raw_rows,final_rows,removed_rows,final_columns,duplicate_rows_found,missing_customer_id_found,cancelled_invoices_found,invalid_quantity_rows_found,invalid_unit_price_rows_found
-2026-07-11 20:32:26,Success,541909,392692,149217,19,5268,135080,9288,10624,2517
